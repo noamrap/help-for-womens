@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פורום אנונימי </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <a href="index.html" class="btn btn-pink">חזרה לעמוד הבית</a>
+    <style>
+        .btn-pink {
+            background-color: #e75480;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+            .btn-pink:hover {
+                background-color: #cc3c67;
+                color: #fff;
+            }
+        body {
+            background-color: #ffe6f1;
+        }
+    </style>
+    <div class="container">
+        <h1 class="my-4" style="text-align: center;">פורום אנונימי</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form>
+                    <div class="form-group">
+                        <label for="postTitle" style="font-size: 24px;">כותרת המסבירה בכלליות איך נפגעת</label>
+                        <input type="text" class="form-control" id="postTitle" name="postTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent" style="font-size: 24px;">תוכן הפגיעה, שאלות הרגישי חופשיה</label>
+                        <textarea class="form-control" id="postContent" name="postContent" rows="5" style="font-size: 20px;" required></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="submitPost()">פרסמי פוסט</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>פוסטים אחרונים</h2>
+                <ul id="recentPosts">
+                    <!-- Recent posts will be displayed here, generated from localStorage -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+<script>
+    // Submit the post and add it to localStorage
+    function submitPost() {
+        // Get the form data
+        var title = document.getElementById("postTitle").value;
+        var content = document.getElementById("postContent").value;
+        var date = new Date().toLocaleString();
+
+        // Add the post to localStorage
+        var post = { title: title, content: content, date: date };
+        var posts = JSON.parse(localStorage.getItem("posts")) || [];
+        posts.unshift(post);
+        localStorage.setItem("posts", JSON.stringify(posts));
+
+        // Clear the form
+        document.getElementById("postTitle").value = "";
+        document.getElementById("postContent").value = "";
+
+        // Refresh the recent posts display
+        displayRecentPosts();
+    }
+
+    // Display the recent posts from localStorage
+    function displayRecentPosts() {
+        var posts = JSON.parse(localStorage.getItem("posts")) || [];
+        var recentPostsElement = document.getElementById("recentPosts");
+        recentPostsElement.innerHTML = "";
+        for (var i = 0; i < posts.length && i < 5; i++) {
+            var post = posts[i];
+            var postElement = document.createElement("li");
+            postElement.innerHTML = "<h4>" + post.title + "</h4><p>" + post.content + "</p><small>" + post.date + "</small>";
+            recentPostsElement.appendChild(postElement);
+        }
+    }
+
+    // Display the initial recent posts on page load
+    displayRecentPosts();
+</script>
+
+
+
+
+
+
