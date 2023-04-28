@@ -1,6 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="he">
 <head>
+       <link rel="snippet" type="text/html" href="https://noamrap.github.io/SNIPPEST/index.html">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const snippets = document.querySelectorAll("[data-snippet]");
+            for (const snippet of snippets) {
+                fetch(snippet.getAttribute("data-snippet"))
+                    .then(response => response.text())
+                    .then(html => snippet.innerHTML = html);
+            }
+        });
+    </script>
     <script src="https://cdn.enable.co.il/licenses/enable-L18859tnuij096k5-0423-43815/init.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,6 +70,8 @@
     </div>
 
     <script src="app.js"></script>
+        <div data-snippet="https://noamrap.github.io/SNIPPEST/index.html"></div>
+
 </body>
 </html>
 <script>
